@@ -13,7 +13,8 @@ namespace web.core.Models
 
         [Required]
         public Car car{ get; set; }
-
+        
+        [DataType(DataType.Date)]
         public DateTime CreatedAt{ get; set; }
 
         public Driver? Driver{get;set;}
