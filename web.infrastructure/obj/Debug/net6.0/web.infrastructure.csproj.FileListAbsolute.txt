@@ -1,6 +1,5 @@
 C:\Users\asy76\source\repos\web\web.infrastructure\bin\Debug\net6.0\web.infrastructure.deps.json
 C:\Users\asy76\source\repos\web\web.infrastructure\bin\Debug\net6.0\web.infrastructure.dll
-C:\Users\asy76\source\repos\web\web.infrastructure\bin\Debug\net6.0\ref\web.infrastructure.dll
 C:\Users\asy76\source\repos\web\web.infrastructure\bin\Debug\net6.0\web.infrastructure.pdb
 C:\Users\asy76\source\repos\web\web.infrastructure\bin\Debug\net6.0\web.core.dll
 C:\Users\asy76\source\repos\web\web.infrastructure\bin\Debug\net6.0\web.core.pdb
@@ -13,3 +12,4 @@ C:\Users\asy76\source\repos\web\web.infrastructure\obj\Debug\net6.0\web.infrastr
 C:\Users\asy76\source\repos\web\web.infrastructure\obj\Debug\net6.0\web.infrastructure.dll
 C:\Users\asy76\source\repos\web\web.infrastructure\obj\Debug\net6.0\ref\web.infrastructure.dll
 C:\Users\asy76\source\repos\web\web.infrastructure\obj\Debug\net6.0\web.infrastructure.pdb
+C:\Users\asy76\source\repos\web\web.infrastructure\obj\Debug\net6.0\refint\web.infrastructure.dll

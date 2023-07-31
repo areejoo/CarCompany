@@ -1,6 +1,5 @@
 C:\Users\asy76\source\repos\web\web.core\bin\Debug\net6.0\web.core.deps.json
 C:\Users\asy76\source\repos\web\web.core\bin\Debug\net6.0\web.core.dll
-C:\Users\asy76\source\repos\web\web.core\bin\Debug\net6.0\ref\web.core.dll
 C:\Users\asy76\source\repos\web\web.core\bin\Debug\net6.0\web.core.pdb
 C:\Users\asy76\source\repos\web\web.core\obj\Debug\net6.0\web.core.csproj.AssemblyReference.cache
 C:\Users\asy76\source\repos\web\web.core\obj\Debug\net6.0\web.core.GeneratedMSBuildEditorConfig.editorconfig
@@ -10,3 +9,4 @@ C:\Users\asy76\source\repos\web\web.core\obj\Debug\net6.0\web.core.csproj.CoreCo
 C:\Users\asy76\source\repos\web\web.core\obj\Debug\net6.0\web.core.dll
 C:\Users\asy76\source\repos\web\web.core\obj\Debug\net6.0\ref\web.core.dll
 C:\Users\asy76\source\repos\web\web.core\obj\Debug\net6.0\web.core.pdb
+C:\Users\asy76\source\repos\web\web.core\obj\Debug\net6.0\refint\web.core.dll

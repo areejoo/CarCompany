@@ -8,7 +8,8 @@
     ".NETCoreApp,Version=v6.0": {
       "web.core/1.0.0": {
         "dependencies": {
-          "Microsoft.EntityFrameworkCore": "8.0.0-preview.5.23280.1"
+          "Microsoft.EntityFrameworkCore": "8.0.0-preview.5.23280.1",
+          "Microsoft.EntityFrameworkCore.Relational": "7.0.9"
         },
         "runtime": {
           "web.core.dll": {}
@@ -38,6 +39,18 @@
         }
       },
       "Microsoft.EntityFrameworkCore.Analyzers/8.0.0-preview.5.23280.1": {},
+      "Microsoft.EntityFrameworkCore.Relational/7.0.9": {
+        "dependencies": {
+          "Microsoft.EntityFrameworkCore": "8.0.0-preview.5.23280.1",
+          "Microsoft.Extensions.Configuration.Abstractions": "7.0.0"
+        },
+        "runtime": {
+          "lib/net6.0/Microsoft.EntityFrameworkCore.Relational.dll": {
+            "assemblyVersion": "7.0.9.0",
+            "fileVersion": "7.0.923.31909"
+          }
+        }
+      },
       "Microsoft.Extensions.Caching.Abstractions/8.0.0-preview.5.23280.8": {
         "dependencies": {
           "Microsoft.Extensions.Primitives": "8.0.0-preview.5.23280.8"
@@ -61,6 +74,17 @@
           "lib/net6.0/Microsoft.Extensions.Caching.Memory.dll": {
             "assemblyVersion": "8.0.0.0",
             "fileVersion": "8.0.23.28008"
+          }
+        }
+      },
+      "Microsoft.Extensions.Configuration.Abstractions/7.0.0": {
+        "dependencies": {
+          "Microsoft.Extensions.Primitives": "8.0.0-preview.5.23280.8"
+        },
+        "runtime": {
+          "lib/net6.0/Microsoft.Extensions.Configuration.Abstractions.dll": {
+            "assemblyVersion": "7.0.0.0",
+            "fileVersion": "7.0.22.51805"
           }
         }
       },
@@ -158,6 +182,13 @@
       "path": "microsoft.entityframeworkcore.analyzers/8.0.0-preview.5.23280.1",
       "hashPath": "microsoft.entityframeworkcore.analyzers.8.0.0-preview.5.23280.1.nupkg.sha512"
     },
+    "Microsoft.EntityFrameworkCore.Relational/7.0.9": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-u7iN6cNd6SJUlpdk24JVIbkji/UbkEEQ7pXncTyT4eXXj+Hz2y4NSZFOAywPGcioIgX1YzbKWDiJhk7hjSFxBQ==",
+      "path": "microsoft.entityframeworkcore.relational/7.0.9",
+      "hashPath": "microsoft.entityframeworkcore.relational.7.0.9.nupkg.sha512"
+    },
     "Microsoft.Extensions.Caching.Abstractions/8.0.0-preview.5.23280.8": {
       "type": "package",
       "serviceable": true,
@@ -171,6 +202,13 @@
       "sha512": "sha512-ElI5/JNczTOL4GTshZLAjfOIzgLLbu3NR1Qr7T+iqkr6tm/vR4ij8aYP8k3Hfe2hvhJvX3pSBCzARWlxhcX7Xw==",
       "path": "microsoft.extensions.caching.memory/8.0.0-preview.5.23280.8",
       "hashPath": "microsoft.extensions.caching.memory.8.0.0-preview.5.23280.8.nupkg.sha512"
+    },
+    "Microsoft.Extensions.Configuration.Abstractions/7.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-f34u2eaqIjNO9YLHBz8rozVZ+TcFiFs0F3r7nUJd7FRkVSxk8u4OpoK226mi49MwexHOR2ibP9MFvRUaLilcQQ==",
+      "path": "microsoft.extensions.configuration.abstractions/7.0.0",
+      "hashPath": "microsoft.extensions.configuration.abstractions.7.0.0.nupkg.sha512"
     },
     "Microsoft.Extensions.DependencyInjection/8.0.0-preview.5.23280.8": {
       "type": "package",

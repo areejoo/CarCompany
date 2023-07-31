@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore;
 using web.infrastructure.interfaces;
 using web.core;
+using web.core.Models;
 using Microsoft.Extensions.Caching.Memory;
 
 namespace web.UI.Controllers
@@ -73,7 +74,7 @@ namespace web.UI.Controllers
                     SortedCars = SortedCars.Where(c => c.Color.Contains(searchString)
                                            || c.Type.Contains(searchString)
                                            || c.WithDriver.Equals(searchString) 
-                                           || c.DailyFare.Contains(searchString) 
+                                           || c.DailyFare==float.Parse(searchString)
                                            || c.EngineCapacity.Equals(searchString)
 
                                            );

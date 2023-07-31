@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using web.core;
+using web.core.Models;
+using web.core.Data;
 using web.infrastructure.interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -58,7 +60,7 @@ namespace web.infrastructure.implements
                 car.Color = model.Color;
                 car.WithDriver = model.WithDriver;
                 car.DailyFare = model.DailyFare;
-                car.Drivers = model.Drivers;
+                car.Driver = model.Driver;
                 car.EngineCapacity = model.EngineCapacity;
                  _context.Update(model);
                 await Save();
