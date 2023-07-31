@@ -15,7 +15,6 @@ namespace web.core.Models
 
         [Required]
         [StringLength(30)]
-        [RegularExpression(@"^[A-Z]+[a-zA-Z""'\s-]*$")]
         public String Email{ get; set; }
         
         [Required]
