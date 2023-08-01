@@ -6,9 +6,8 @@ using web.core.Models;
 using Microsoft.Extensions.Caching.Memory;
 
 namespace web.UI.Controllers
-{
+{   [ApiController]
     [Route("api/[controller]")]
-    [ApiController]
     public class CarController : Controller
     {
         private readonly ICarRepository _carRepo;

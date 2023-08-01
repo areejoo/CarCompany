@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using web.core.Data;
+using web.core.Data.Configuration;
 
 
 namespace web.core.Models
@@ -18,17 +19,14 @@ namespace web.core.Models
         public DbSet<Driver> Drivers { set; get; }
         public DbSet<Customer> Customers { set; get; }
         public DbSet<Rental> Rentals { set; get; }
-       protected override void OnModelCreating(ModelBuilder modelBuilder)
-       {     //make Number of car unique
-            modelBuilder.Entity<Car>()
-            .HasIndex(c => c.Number)
-            .IsUnique();
 
-         //make CreatedAt field  auto in Rental model
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {     
+            new CarEntityTypeConfiguration().Configure(modelBuilder.Entity<Car>());
+            new RentalEntityTypeConfiguration().Configure(modelBuilder.Entity<Rental>());
+            new CustomerEntityTypeConfiguration().Configure(modelBuilder.Entity<Customer>());
+            new DriverEntityTypeConfiguration().Configure(modelBuilder.Entity<Driver>());
 
-            modelBuilder.Entity<Rental>()
-            .Property(r => r.CreatedAt)
-            .HasDefaultValueSql("getdate()");
         }
 
 

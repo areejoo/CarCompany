@@ -5,23 +5,29 @@ using System.ComponentModel.DataAnnotations;
 
 namespace web.core.Models
 {
+    public enum StatusRental{
+        Canceled,
+        Rented,
+        Returned,
+        // Pending
+
+
+    }
     public class Rental:IEntity
     {
         public Guid Id{ get; set; }
-        [Required]
+
         public Customer Customer { get; set; }
 
-        [Required]
-        public Car car{ get; set; }
+        public Car Car{ get; set; }
+
+        public StatusRental Status{ get; set; }
         
-        [DataType(DataType.Date)]
         public DateTime CreatedAt{ get; set; }
 
         public Driver? Driver{get;set;}
-        
-        [Required]
-        public int numOfDays{ get; set; }
-     
-
+    
+        public int RentTerm{ get; set; }
+    
     }
 }

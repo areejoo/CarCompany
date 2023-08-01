@@ -1201,7 +1201,8 @@
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
           "Microsoft.EntityFrameworkCore": "8.0.0-preview.5.23280.1",
-          "Microsoft.EntityFrameworkCore.Relational": "7.0.9"
+          "Microsoft.EntityFrameworkCore.Relational": "7.0.9",
+          "Microsoft.EntityFrameworkCore.SqlServer": "(, )"
         },
         "compile": {
           "bin/placeholder/web.core.dll": {}
