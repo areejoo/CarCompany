@@ -1,8 +1,10 @@
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+
 using web.core;
-using web.core.Models;
-using web.infrastructure.implements;
-using web.infrastructure.interfaces;
+using web.core.Entities;
+using web.core.Interfaces;
+using web.infrastructure.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,11 +12,15 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<MyAppDbContext>(options => options.UseSqlServer(
     builder.Configuration.GetConnectionString("DefaultConnection"),
-                    optionsBuilder => optionsBuilder.MigrationsAssembly("web.core"))
+                    optionsBuilder => optionsBuilder.MigrationsAssembly("web.infrastructure.Data"))
 
     );
-builder.Services.AddScoped<ICarRepository, CarRepository>();
-//builder.Services.AddScoped<ICarRepository,CarRepository>();
+    builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+
+// builder.Services.AddScoped<typeof(IGenericRepository<>), typeof(GenericReository<>)>();
+    // builder.Services.AddScoped(typeof(IGenericRepository < > ), typeof(GenericReository< > ));  
+
+
 builder.Services.AddMemoryCache();
 var app = builder.Build();
 

@@ -1,17 +1,14 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using web.core.Data;
 
-namespace web.core.Models
+namespace web.core.Entities
 {
-    public class Car:IEntity
+    public class Car:BaseEntity
     {
-        public Guid Id { get; set; }
         
         public int Number{ get; set; }
 
         public float EngineCapacity{ get; set; }
         
-      
         public string Color{ get; set; }
 
         
@@ -23,8 +20,9 @@ namespace web.core.Models
     
         public bool WithDriver{ get; set; }
 
-      
         public Driver Driver{get; set;}
+        
+        public Customer Customer{get; set;}
 
 
 

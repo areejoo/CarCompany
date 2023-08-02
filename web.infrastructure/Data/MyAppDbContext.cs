@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using web.core.Data;
-using web.core.Data.Configuration;
+using web.core.Entities;
+using web.infrastructure.Configuration;
 
 
-namespace web.core.Models
+namespace web.infrastructure.Data
 {
     public class MyAppDbContext : DbContext
     {
@@ -22,6 +22,7 @@ namespace web.core.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {     
+            base.OnModelCreating(modelBuilder);
             new CarEntityTypeConfiguration().Configure(modelBuilder.Entity<Car>());
             new RentalEntityTypeConfiguration().Configure(modelBuilder.Entity<Rental>());
             new CustomerEntityTypeConfiguration().Configure(modelBuilder.Entity<Customer>());

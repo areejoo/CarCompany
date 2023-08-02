@@ -1,9 +1,7 @@
-using web.core.Data;
-
 using System.ComponentModel.DataAnnotations;
 
 
-namespace web.core.Models
+namespace web.core.Entities
 {
     public enum StatusRental{
         Canceled,
@@ -13,9 +11,8 @@ namespace web.core.Models
 
 
     }
-    public class Rental:IEntity
+    public class Rental:BaseEntity
     {
-        public Guid Id{ get; set; }
 
         public Customer Customer { get; set; }
 

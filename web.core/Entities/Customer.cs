@@ -1,13 +1,11 @@
-using web.core.Data;
 
 using System.ComponentModel.DataAnnotations;
 
 
-namespace web.core.Models
+namespace web.core.Entities
 {
-    public class Customer:IEntity
+    public class Customer:BaseEntity
     {
-        public Guid Id{ get; set; }
         
         public String Name { get; set; }
         

@@ -4,11 +4,10 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using web.core.Data;
-using web.core.Models;
+using web.core.Entities;
 
 
-namespace web.core.Data.Configuration
+namespace web.infrastructure.Configuration
 {
 
 
@@ -25,6 +24,8 @@ public class CustomerEntityTypeConfiguration : IEntityTypeConfiguration<Customer
         
         builder
             .Property(c => c.Email).IsRequired();
+
+    
 
        
 
