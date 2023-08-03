@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore;
 using web.infrastructure.Data;
+using System.Collections.Generic;
 using web.core;
 using web.core.Entities;
+using web.core.Interfaces;
 using web.api.Dtos;
 using Microsoft.Extensions.Caching.Memory;
 
@@ -11,10 +13,10 @@ namespace web.api.Controllers
     [Route("api/[controller]")]
     public class CarController : Controller
     {
-        private readonly GenericRepository<Car> _carRepo;
+        private readonly IGenericRepository<Car> _carRepo;
 
 
-        public CarController(ICarRepository carRepo, IMemoryCache memoryCache)
+        public CarController(IGenericRepository<Car> carRepo)
         {
             _carRepo = carRepo;
        
@@ -42,7 +44,7 @@ namespace web.api.Controllers
     return  Ok(results) ;
         }
         [HttpGet("getcar/{id}")]
-        public async  Task<ActionResult<<CarDto>> GetAsync(Guid id)
+        public async  Task<ActionResult<CarDto>> GetAsync(Guid id)
         {
             var car = _carRepo.GetById(id);
             if(car==null)
@@ -64,7 +66,7 @@ namespace web.api.Controllers
 
         
         [HttpPost("insertcar")]
-        public async Task<IActionResult<CreateCarDto>> CreateAsync(CreateCarDto carDto)
+        public async Task<ActionResult<CreateCarDto>> CreateAsync(CreateCarDto carDto)
 
         {
         try{
@@ -82,12 +84,12 @@ namespace web.api.Controllers
             return BadRequest();       
             }
         
-        return Created(carDto);
+        return Ok(carDto);
         }
 
         [HttpPut("updatecar")]
         
-        public  Task<IActionResult<updateCarDto>> UpdateCar(updateCarDto carDto) {
+        public  Task<ActionResult<UpdateCarDto>> UpdateCar(UpdateCarDto carDto) {
 
         try{
         var car=new Car();
@@ -126,6 +128,6 @@ namespace web.api.Controllers
             
         
 
-        // }
+        }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using web.core.Interfaces;
 using web.core.Entities;
+using web.infrastructure.Data;
 
 namespace web.infrastructure.Data
 {
@@ -36,10 +37,14 @@ public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
             context.SaveChanges();  
         }  
         public void Delete(Guid id) {  
-            if (entity == null) {  
+            if (id == null) {  
                 throw new ArgumentNullException("entity");  
             }  
-            entities.Remove(entity);  
+            // T obj = context.entities.Where(a => a.Id == id).FirstOrDefault();
+            // entities.Remove(obj);
+            var entity= entities.Where(c => c.Id == id);
+            context.Remove(entity);
+
             context.SaveChanges();  
         }  
     }  

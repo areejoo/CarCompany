@@ -1,7 +1,7 @@
 using web.core.Entities;
 namespace web.api.Dtos
 {
-    public class CreateCarDto
+    public class UpdateCarDto
     {
     public Guid Id { get; set; }
 
