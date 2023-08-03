@@ -12,7 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<MyAppDbContext>(options => options.UseSqlServer(
     builder.Configuration.GetConnectionString("DefaultConnection"),
-                    optionsBuilder => optionsBuilder.MigrationsAssembly("web.infrastructure.Data"))
+                    optionsBuilder => optionsBuilder.MigrationsAssembly("web.infrastructure"))
 
     );
     builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));

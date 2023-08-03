@@ -1,25 +1,22 @@
-﻿
-using System.ComponentModel.DataAnnotations;
-
-namespace web.core.Entities
+﻿namespace web.core.Entities
 {
-    public class Driver:BaseEntity
+    public class Driver : BaseEntity
     {
-        
-        public String Name { get; set; }
-    
-        public String Phone{ get; set; }
 
-        public bool IsAvailable{get;set;}
+        public string Name { get; set; }
 
-        public Car Car{ get; set; }
+        public string Phone { get; set; }
 
-        public Driver ReplecmentDriver{ get; set; }
+        public bool IsAvailable { get; set; }
 
+        public Guid? ReplacementDriverId { get; set; }
+        public Driver ReplacementDriver { get; set; }
 
+        public virtual ICollection<Car> Cars { get; set; }
 
+        public virtual ICollection<Rental> Rentals { get; set; }
 
-
+        public virtual ICollection<Driver> ReplacementDrivers { get; set; }
 
     }
 }

@@ -15,6 +15,11 @@
       "ProjectGuid": "b03136ad-165c-4c5b-8729-2ee184f96c47",
       "DisplayName": "web.core",
       "ColorIndex": 2
+    },
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "Miscellaneous Files",
+      "ColorIndex": -1
     }
   },
   "NextColorIndex": 3

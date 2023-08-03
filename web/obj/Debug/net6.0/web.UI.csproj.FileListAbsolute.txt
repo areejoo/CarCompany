@@ -5,6 +5,7 @@ C:\Users\asy76\source\repos\web\web\bin\Debug\net6.0\web.UI.exe
 C:\Users\asy76\source\repos\web\web\bin\Debug\net6.0\web.UI.deps.json
 C:\Users\asy76\source\repos\web\web\bin\Debug\net6.0\web.UI.runtimeconfig.json
 C:\Users\asy76\source\repos\web\web\bin\Debug\net6.0\web.UI.dll
+C:\Users\asy76\source\repos\web\web\bin\Debug\net6.0\ref\web.UI.dll
 C:\Users\asy76\source\repos\web\web\bin\Debug\net6.0\web.UI.pdb
 C:\Users\asy76\source\repos\web\web\bin\Debug\net6.0\Azure.Core.dll
 C:\Users\asy76\source\repos\web\web\bin\Debug\net6.0\Azure.Identity.dll
@@ -69,6 +70,10 @@ C:\Users\asy76\source\repos\web\web\bin\Debug\net6.0\runtimes\win\lib\net6.0\Sys
 C:\Users\asy76\source\repos\web\web\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
 C:\Users\asy76\source\repos\web\web\bin\Debug\net6.0\runtimes\browser\lib\net6.0\System.Text.Encodings.Web.dll
 C:\Users\asy76\source\repos\web\web\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
+C:\Users\asy76\source\repos\web\web\bin\Debug\net6.0\web.core.dll
+C:\Users\asy76\source\repos\web\web\bin\Debug\net6.0\web.infrastructure.dll
+C:\Users\asy76\source\repos\web\web\bin\Debug\net6.0\web.core.pdb
+C:\Users\asy76\source\repos\web\web\bin\Debug\net6.0\web.infrastructure.pdb
 C:\Users\asy76\source\repos\web\web\obj\Debug\net6.0\web.UI.csproj.AssemblyReference.cache
 C:\Users\asy76\source\repos\web\web\obj\Debug\net6.0\web.UI.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\asy76\source\repos\web\web\obj\Debug\net6.0\web.UI.AssemblyInfoInputs.cache
@@ -87,13 +92,3 @@ C:\Users\asy76\source\repos\web\web\obj\Debug\net6.0\web.UI.dll
 C:\Users\asy76\source\repos\web\web\obj\Debug\net6.0\ref\web.UI.dll
 C:\Users\asy76\source\repos\web\web\obj\Debug\net6.0\web.UI.pdb
 C:\Users\asy76\source\repos\web\web\obj\Debug\net6.0\web.UI.genruntimeconfig.cache
-C:\Users\asy76\source\repos\web\web\bin\Debug\net6.0\web.core.dll
-C:\Users\asy76\source\repos\web\web\bin\Debug\net6.0\web.infrastructure.dll
-C:\Users\asy76\source\repos\web\web\bin\Debug\net6.0\web.core.pdb
-C:\Users\asy76\source\repos\web\web\bin\Debug\net6.0\web.infrastructure.pdb
-C:\Users\asy76\source\repos\web\web\obj\Debug\net6.0\staticwebassets\msbuild.web.UI.Microsoft.AspNetCore.StaticWebAssets.props
-C:\Users\asy76\source\repos\web\web\obj\Debug\net6.0\staticwebassets\msbuild.build.web.UI.props
-C:\Users\asy76\source\repos\web\web\obj\Debug\net6.0\staticwebassets\msbuild.buildMultiTargeting.web.UI.props
-C:\Users\asy76\source\repos\web\web\obj\Debug\net6.0\staticwebassets\msbuild.buildTransitive.web.UI.props
-C:\Users\asy76\source\repos\web\web\obj\Debug\net6.0\staticwebassets.pack.json
-C:\Users\asy76\source\repos\web\web\obj\Debug\net6.0\refint\web.UI.dll

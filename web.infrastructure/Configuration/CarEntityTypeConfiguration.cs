@@ -18,8 +18,6 @@ public class CarEntityTypeConfiguration : IEntityTypeConfiguration<Car>
         builder
             .HasIndex(c => c.Number)
             .IsUnique();
-            builder.HasOne(c => c.Customer).WithMany(c => c.Cars).HasForeignKey(c => c.Customer.Id);  
-
     }
 }
 }

@@ -16,8 +16,7 @@ public class DriverEntityTypeConfiguration : IEntityTypeConfiguration<Driver>
     {
          builder
             .Property(c => c.Name).IsRequired();
-         builder   
-            .Property(c => c.Phone).IsRequired();
+
 
     
 

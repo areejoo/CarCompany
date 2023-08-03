@@ -17,17 +17,7 @@ public class CustomerEntityTypeConfiguration : IEntityTypeConfiguration<Customer
     {
          builder
             .Property(c => c.Name).IsRequired();
-            
-       
-        builder
-            .Property(c => c.Phone).IsRequired();
-        
-        builder
-            .Property(c => c.Email).IsRequired();
 
-    
-
-       
 
     }
 }
