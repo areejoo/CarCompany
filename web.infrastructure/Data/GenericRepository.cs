@@ -16,8 +16,8 @@ public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
             this.context = context;  
             entities = context.Set < T > ();  
         }  
-        public IEnumerable<T>  GetAll() {  
-            return entities.AsEnumerable();  
+        public IQueryable<T>  GetAll() {  
+            return entities.AsQueryable();  
         }  
         public T GetById(Guid id) {  
             return entities.SingleOrDefault(s => s.Id == id);  
@@ -35,7 +35,7 @@ public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
             }  
             context.SaveChanges();  
         }  
-        public void Delete(T entity) {  
+        public void Delete(Guid id) {  
             if (entity == null) {  
                 throw new ArgumentNullException("entity");  
             }  

@@ -29,4 +29,8 @@
     <ProjectReference Include="..\web.infrastructure\web.infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="NewFolder\" />
+  </ItemGroup>
+
 </Project>

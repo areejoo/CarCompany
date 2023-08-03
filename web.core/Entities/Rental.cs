@@ -14,8 +14,6 @@ namespace web.core.Entities
         public Guid? DriverId { get; set; }
         public Driver Driver { get; set; }
 
-
-
         public RentalStatus Status { get; set; }
 
         public DateTime StartDate { get; set; }

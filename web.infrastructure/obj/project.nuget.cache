@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "VqdEgK+TnZ+bG1BKU+2XCP8p5uj8DSzA7jTBMIsNHokPfK23iYA/+aJsK7xM481Sl5CK1N4Qyi3L8/m3pMl88w==",
+  "dgSpecHash": "08iBxa5ZX2cyPaLNGdL+PNcpNDfYfxQoSzkBsuoQS5MLysqszX1TRRgfyYGGZkCOseqF+RCGb3BehgyP/tX6Yg==",
   "success": true,
   "projectFilePath": "C:\\Users\\asy76\\source\\repos\\web\\web.infrastructure\\web.infrastructure.csproj",
   "expectedPackageFiles": [
@@ -66,7 +66,10 @@
     "C:\\Users\\asy76\\.nuget\\packages\\system.text.encodings.web\\6.0.0\\system.text.encodings.web.6.0.0.nupkg.sha512",
     "C:\\Users\\asy76\\.nuget\\packages\\system.text.json\\4.7.2\\system.text.json.4.7.2.nupkg.sha512",
     "C:\\Users\\asy76\\.nuget\\packages\\system.threading.tasks.extensions\\4.5.4\\system.threading.tasks.extensions.4.5.4.nupkg.sha512",
-    "C:\\Users\\asy76\\.nuget\\packages\\system.windows.extensions\\6.0.0\\system.windows.extensions.6.0.0.nupkg.sha512"
+    "C:\\Users\\asy76\\.nuget\\packages\\system.windows.extensions\\6.0.0\\system.windows.extensions.6.0.0.nupkg.sha512",
+    "C:\\Users\\asy76\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.20\\microsoft.netcore.app.ref.6.0.20.nupkg.sha512",
+    "C:\\Users\\asy76\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.20\\microsoft.windowsdesktop.app.ref.6.0.20.nupkg.sha512",
+    "C:\\Users\\asy76\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\6.0.20\\microsoft.aspnetcore.app.ref.6.0.20.nupkg.sha512"
   ],
   "logs": []
 }

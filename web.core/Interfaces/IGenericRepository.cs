@@ -7,10 +7,10 @@ namespace web.core.Interfaces
 {
 public interface IGenericRepository<T> where T : BaseEntity
 {
-  IEnumerable<T> GetAll();  
+  IQueryable<T> GetAll();  
         T GetById(Guid id);  
         void Add(T entity);  
         void Update(T entity);  
-        void Delete(T entity);
+        void Delete(Guid id);
 }
 }
