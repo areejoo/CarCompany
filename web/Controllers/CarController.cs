@@ -23,7 +23,7 @@ namespace web.api.Controllers
        
 
         [HttpGet("getall")]
-        public async  Task<ActionResult<IQueryable<CarDto>>> GetListAsync()
+        public async  Task<ActionResult<IQueryable<CarListDto>>> GetListAsync()
         {
             var cars = _carRepo.GetAll();
             var results= new List<CarListDto>();
@@ -64,10 +64,9 @@ namespace web.api.Controllers
 
         
         [HttpPost("insertcar")]
-        public async Task<IActionResult<CreateCarDto>> CreateAsync(CreateCarDto carDto)
-
-        {
-        try{
+        public async Task<IActionResult<CreateCarDto>> CreateAsync(CarRequestDto carDto)
+         {
+           try{
         var car=new Car();
         car.Type=carDto.Type;
         car. EngineCapacity=carDto.EngineCapacity;
@@ -87,7 +86,7 @@ namespace web.api.Controllers
 
         [HttpPut("updatecar")]
         
-        public  Task<IActionResult<updateCarDto>> UpdateCar(updateCarDto carDto) {
+        public  Task<IActionResult<updateCarDto>> UpdateCar(CarRequestDto carDto) {
 
         try{
         var car=new Car();
