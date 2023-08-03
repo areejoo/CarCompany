@@ -64,9 +64,10 @@ namespace web.api.Controllers
 
         
         [HttpPost("insertcar")]
-        public async Task<IActionResult<CreateCarDto>> CreateAsync(CarRequestDto carDto)
-         {
-           try{
+        public async Task<IActionResult<CreateCarDto>> CreateAsync(CreateCarDto carDto)
+
+        {
+        try{
         var car=new Car();
         car.Type=carDto.Type;
         car. EngineCapacity=carDto.EngineCapacity;
@@ -86,7 +87,7 @@ namespace web.api.Controllers
 
         [HttpPut("updatecar")]
         
-        public  Task<IActionResult<updateCarDto>> UpdateCar(CarRequestDto carDto) {
+        public  Task<IActionResult<updateCarDto>> UpdateCar(updateCarDto carDto) {
 
         try{
         var car=new Car();
