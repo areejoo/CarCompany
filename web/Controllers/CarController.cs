@@ -64,7 +64,7 @@ namespace web.api.Controllers
 
         
         [HttpPost("insertcar")]
-        public async Task<IActionResult> CreateAsync(CreateCarDto carDto)
+        public async Task<IActionResult<CreateCarDto>> CreateAsync(CreateCarDto carDto)
 
         {
         try{
@@ -82,12 +82,12 @@ namespace web.api.Controllers
             return BadRequest();       
             }
         
-        return Created();
+        return Created(carDto);
         }
 
         [HttpPut("updatecar")]
         
-        public  Task<IActionResult> UpdateCar(updateCarDto) {
+        public  Task<IActionResult<updateCarDto>> UpdateCar(updateCarDto carDto) {
 
         try{
         var car=new Car();
@@ -104,7 +104,7 @@ namespace web.api.Controllers
              
             }
 
-        return Ok();
+        return Ok(carDto);
         }
 
 
