@@ -7,107 +7,139 @@ using web.core.Entities;
 using web.core.Interfaces;
 using web.api.Dtos;
 using Microsoft.Extensions.Caching.Memory;
+using AutoMapper;
+using System.Data.Entity;
 
 namespace web.api.Controllers
-{   [ApiController]
+{
+    [ApiController]
     [Route("api/[controller]")]
     public class CarController : Controller
     {
         private readonly IGenericRepository<Car> _carRepo;
+        private readonly IMapper _mapper;
 
 
-        public CarController(IGenericRepository<Car> carRepo)
+        public CarController(IGenericRepository<Car> carRepo, IMapper mapper)
         {
             _carRepo = carRepo;
-       
+            _mapper = mapper;
+
         }
 
-       
+
 
         [HttpGet("getall")]
-        public async  Task<ActionResult<IQueryable<CarListDto>>> GetListAsync()
+        public async Task<List<CarListDto>> GetListAsync(CarRequestDto request)
         {
-            var cars = _carRepo.GetAll();
-            var results= new List<CarListDto>();
-            foreach (var c in cars)
-                { results.Add( new CarListDto(){
-                    Id= c.Id,
-                   Number= c.Number,
-                    Type=c.Type,
-                    EngineCapacity=c.EngineCapacity,
-                    DailyFare=c.DailyFare,
-                    Color=c.Color,
-                    WithDriver=c.WithDriver,
-                    DriverId=c.DriverId});
-                };
+            var query = _carRepo.GetQuerable(request.PageIndex, request.PageSize);
+            if (!String.IsNullOrEmpty(request.Search))
+            {
+                query = query.Where(c => c.Number.ToString().Equals(request.Search)
+                                           || c.Type.Equals(request.Search)
+                                           || c.Color.Equals(request.Search)
+                                           || c.WithDriver.ToString().Equals(request.Search)
+                                           || c.DailyFare.ToString().Equals(request.Search)
+                                           || c.EngineCapacity.ToString().Equals(request.Search));
+            }
+            //var count = query.Count();
+            if (!String.IsNullOrEmpty(request.Sort))
+            {
+                switch (request.Sort)
+                {
+                    case "Color_desc":
+                        query = query.OrderByDescending(c => c.Color);
+                        break;
+                    case "EngineCapacity_desc":
+                        query = query.OrderByDescending(c => c.EngineCapacity);
+                        break;
+                    case "CapacityEngine-asc":
+                        query = query.OrderBy(c => c.EngineCapacity);
+                        break;
+                    case "Type_desc":
+                        query = query.OrderByDescending(c => c.Type);
+                        break;
+                    case "Type_asc":
+                        query = query.OrderBy(c => c.Type);
+                        break;
+                    case "WithDriver_desc":
+                        query = query.OrderByDescending(c => c.WithDriver);
+                        break;
+                    case "WithDriver_asc":
+                        query = query.OrderBy(c => c.WithDriver);
+                        break;
+                    case "DailyFare_desc":
+                        query = query.OrderByDescending(c => c.DailyFare);
+                        break;
+                    case "DailyFare_asc":
+                        query = query.OrderBy(c => c.DailyFare);
+                        break;
 
-    return  Ok(results) ;
+
+                    default:
+                        query = query.OrderBy(c => c.Color);
+                        break;
+                }
+            }
+            query = (IQueryable<Car>)await query.ToListAsync();
+             var results = _mapper.Map<CarListDto[]>(query);
+            
+            foreach (CarListDto c in results) {
+                c.Count = query.Count();
+            }
+
+            return   results.ToList();
         }
         [HttpGet("getcar/{id}")]
-        public async  Task<ActionResult<CarDto>> GetAsync(Guid id)
+        public async Task<CarDto> GetAsync(Guid id)
         {
             var car = _carRepo.GetById(id);
-            if(car==null)
-            {
-                return  NotFound();
-            }
-            var result=new CarDto(){
-                    
-                   Number= car.Number,
-                    Type=car.Type,
-                    EngineCapacity=car.EngineCapacity,
-                    DailyFare=car.DailyFare,
-                    Color=car.Color,
-                    WithDriver=car.WithDriver,
-                    DriverId=car.DriverId};
-   
-            return  Ok(result) ;
-            }
+           
+            var result = _mapper.Map<CarDto>(car);
 
-        
+            return (result);
+        }
+
+
         [HttpPost("insertcar")]
-        public async Task<ActionResult<CreateCarDto>> CreateAsync(CreateCarDto carDto)
+        public async Task<CreateCarDto> CreateAsync(CreateCarDto carDto)
 
         {
-        try{
-        var car=new Car();
-        car.Type=carDto.Type;
-        car. EngineCapacity=carDto.EngineCapacity;
-        car.DailyFare=carDto.DailyFare;
-        car. Color=carDto.Color;
-        car. WithDriver=carDto.WithDriver;
-        car.  DriverId=carDto.DriverId;
-        _carRepo.Add(car);
+            try
+            {
+                var car = _mapper.Map<Car>(carDto);
+                
+                _carRepo.Add(car);
 
-        }
-        catch (Exception e) {
-            return BadRequest();       
             }
-        
-        return Ok(carDto);
+            catch (Exception e)
+            {
+               
+            }
+
+            return (carDto);
         }
 
         [HttpPut("updatecar")]
-        
-        public  Task<ActionResult<UpdateCarDto>> UpdateCar(UpdateCarDto carDto) {
 
-        try{
-        var car=new Car();
-        car.Id=carDto.Id;
-        car.Type=carDto.Type;
-        car.EngineCapacity=carDto.EngineCapacity;
-        car.DailyFare=carDto.DailyFare;
-        car.Color=carDto.Color;
-        car.WithDriver=carDto.WithDriver;
-        car.DriverId=carDto.DriverId;
-        }
-         catch (Exception e) {
-            // return BadRequest();
-             
+        public  async Task <UpdateCarDto> UpdateCar(UpdateCarDto carDto)
+        {
+
+            try
+            {
+                var car = _mapper.Map<Car>(carDto);
+
+                _carRepo.Update(car);
+
+            }
+            catch (Exception e)
+            {
+
             }
 
-        return Ok(carDto);
+            return (carDto);
         }
+
 
 
         [HttpDelete("deletecar")]
@@ -120,13 +152,14 @@ namespace web.api.Controllers
 
             }
 
-            catch (Exception e) {
+            catch (Exception e)
+            {
 
-              // return BadRequest();
+                // return BadRequest();
             }
             return Ok();
-            
-        
+
+
 
         }
     }

@@ -1,19 +1,21 @@
+using System.ComponentModel.DataAnnotations;
 using web.core.Entities;
 namespace web.api.Dtos
 {
     public class CreateCarDto
     {
-      public int Number { get; set; }
+        [Required]
+        public int Number { get; set; }
 
         public double EngineCapacity { get; set; }
-
+        [StringLength(15)]
         public string Color { get; set; }
 
-
+        [StringLength(10)]
         public string Type { get; set; }
 
 
-        public double DailyFare { get; set; } 
+        public double DailyFare { get; set; }
 
 
         public bool WithDriver { get; set; }

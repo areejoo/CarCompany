@@ -1,8 +1,10 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace web.api.Dtos
 {
     public class CarDto
     {
-
+        [Required]
         public int Number { get; set; }
 
         public double EngineCapacity { get; set; }
