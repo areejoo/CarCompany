@@ -30,9 +30,10 @@ namespace web.api.Controllers
 
 
         [HttpGet("getall")]
-        public async Task<List<CarListDto>> GetListAsync(CarRequestDto request)
+        public async Task<CarListDto> GetListAsync(CarRequestDto request)
         {
             var query = _carRepo.GetQuerable(request.PageIndex, request.PageSize);
+            //filtering
             if (!String.IsNullOrEmpty(request.Search))
             {
                 query = query.Where(c => c.Number.ToString().Equals(request.Search)
@@ -42,7 +43,9 @@ namespace web.api.Controllers
                                            || c.DailyFare.ToString().Equals(request.Search)
                                            || c.EngineCapacity.ToString().Equals(request.Search));
             }
-            //var count = query.Count();
+            //get Count
+            var count = query.Count();
+            //apply  sorting
             if (!String.IsNullOrEmpty(request.Sort))
             {
                 switch (request.Sort)
@@ -51,10 +54,8 @@ namespace web.api.Controllers
                         query = query.OrderByDescending(c => c.Color);
                         break;
                     case "EngineCapacity_desc":
-                        query = query.OrderByDescending(c => c.EngineCapacity);
                         break;
                     case "CapacityEngine-asc":
-                        query = query.OrderBy(c => c.EngineCapacity);
                         break;
                     case "Type_desc":
                         query = query.OrderByDescending(c => c.Type);
@@ -81,14 +82,18 @@ namespace web.api.Controllers
                         break;
                 }
             }
-            query = (IQueryable<Car>)await query.ToListAsync();
-             var results = _mapper.Map<CarListDto[]>(query);
-            
-            foreach (CarListDto c in results) {
-                c.Count = query.Count();
-            }
+          
+            //apply pagination
 
-            return   results.ToList();
+            var totalPages = (int)Math.Ceiling((decimal)count / request.PageSize);
+            query=query.Skip((request.PageIndex - 1) * request.PageSize).Take(request.PageSize);
+            
+            //output
+            var result= await query.ToListAsync();
+            CarListDto carList = new CarListDto() { CarsPaginationList=result,Count=count};
+
+
+            return   carList;
         }
         [HttpGet("getcar/{id}")]
         public async Task<CarDto> GetAsync(Guid id)
