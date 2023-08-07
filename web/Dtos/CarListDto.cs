@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using web.core.Entities;
 
 namespace web.api.Dtos
 {

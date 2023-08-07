@@ -20,8 +20,8 @@ public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
             entities = context.Set < T > ();  
         }  
 
-        public IQueryable<T>  GetQuerable(int pageIndex, int pageSize) {  
-            return entities.AsQueryable().Skip((pageIndex - 1) * pageSize);
+        public IQueryable<T>  GetQuerable(int pageIndex, int pageSize) {
+            return entities.AsQueryable();
 
         }  
         

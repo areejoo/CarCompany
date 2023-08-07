@@ -90,7 +90,8 @@ namespace web.api.Controllers
             
             //output
             var result= await query.ToListAsync();
-            CarListDto carList = new CarListDto() { CarsPaginationList=result,Count=count};
+            var resultDto = _mapper.Map<CarDto[]>(result);
+            CarListDto carList = new CarListDto() { CarsPaginationList=resultDto,Count=count};
 
 
             return   carList;
