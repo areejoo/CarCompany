@@ -7,10 +7,10 @@ namespace web.core.Interfaces
 {
     public interface IGenericRepository<T> where T : BaseEntity
     {
-        IQueryable<T> GetQuerable(int pageNumber, int pageSize);
-        T GetById(Guid id);
-        void Add(T entity);
-        void Update(T entity);
-        void Delete(Guid id);
+        IQueryable<T> GetQueryable();
+        Task<T> GetByIdAsync(Guid id);
+        Task Add(T entity);
+        Task Update(T entity);
+        Task Delete(Guid id);
     }
 }

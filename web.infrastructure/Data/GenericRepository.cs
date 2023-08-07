@@ -20,39 +20,42 @@ public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
             entities = context.Set < T > ();  
         }  
 
-        public IQueryable<T>  GetQuerable(int pageIndex, int pageSize) {
-            return entities.AsQueryable();
+        public   IQueryable<T>GetQueryable() {
+            return    entities.AsQueryable();
 
         }  
         
-        public T GetById(Guid id) {  
-            return entities.SingleOrDefault(s => s.Id == id);  
+        public async Task<T> GetByIdAsync(Guid id) {  
+            return  await entities.FirstOrDefaultAsync(s => s.Id == id);  
         }  
         
-        public void Add(T entity) {  
+        public async Task Add(T entity) {  
             if (entity == null) {  
                 throw new ArgumentNullException("entity");  
             }  
-            entities.Add(entity);  
+             await entities.AddAsync(entity);  
             context.SaveChanges();  
         }  
         
-        public void Update(T entity) {  
-            if (entity == null) {  
-                throw new ArgumentNullException("entity");  
+        public async Task Update(T entity) {
+            var car = await entities.FirstOrDefaultAsync(s => s.Id == entity.Id);
+            if (car == null) {  
+                throw new EntryPointNotFoundException("entity");  
             }  
-            context.SaveChanges();  
+             await context.SaveChangesAsync();  
         }  
-        public void Delete(Guid id) {  
-            if (id == null) {  
-                throw new ArgumentNullException("entity");  
-            }  
-            // T obj = context.entities.Where(a => a.Id == id).FirstOrDefault();
-            // entities.Remove(obj);
-            var entity= entities.Where(c => c.Id == id);
-            context.Remove(entity);
+        public async Task Delete(Guid id) {  
+           ;
+            var entity=  await entities.FirstOrDefaultAsync(s => s.Id == id);
+            if (entity != null)
+            {
+                context.Remove(entity);
 
-            context.SaveChanges();  
+                await context.SaveChangesAsync();
+            }
+            else {
+                throw new EntryPointNotFoundException("entity");
+            }
         }  
     }  
 }

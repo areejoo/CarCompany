@@ -6,7 +6,7 @@ namespace web.api.Dtos
     public class CarListDto
     {
 
-        public ICollection<CarDto> CarsPaginationList { get; set; }
+        public IReadOnlyList<CarDto> CarsPaginationList { get; set; }
 
         public int Count { get; set; }
     }

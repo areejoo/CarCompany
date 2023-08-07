@@ -29,23 +29,127 @@ namespace web.api.Controllers
 
 
 
-        [HttpGet("getall")]
+        [HttpGet]
         public async Task<CarListDto> GetListAsync(CarRequestDto request)
         {
-            var query = _carRepo.GetQuerable(request.PageIndex, request.PageSize);
+            var query =   _carRepo.GetQueryable();
             //filtering
             if (!String.IsNullOrEmpty(request.Search))
             {
-                query = query.Where(c => c.Number.ToString().Equals(request.Search)
+                query = FilterCar(query, request);
+            }
+            //get Count
+            var count = query.Count();
+            //apply  sorting
+
+            query = SortCar(query,request);
+
+            //apply pagination
+
+            query = CreatePagination(query, request);
+            
+            //output
+            var result= await query.ToListAsync();
+            var resultDto = _mapper.Map<CarDto[]>(result);
+            CarListDto carList = new CarListDto() { CarsPaginationList=resultDto,Count=count};
+
+
+            return   carList;
+        }
+
+        [HttpGet]
+        public async Task<CarDto> GetAsync(Guid id)
+        {
+            var car = await _carRepo.GetByIdAsync(id);
+           
+            var result = _mapper.Map<CarDto>(car);
+
+            return (result);
+        }
+
+
+        [HttpPost]
+        public async Task<CreateCarDto> CreateAsync(CreateCarDto carDto)
+
+        {
+            try
+            {
+                var car = _mapper.Map<Car>(carDto);
+                
+                await _carRepo.Add(car);
+
+            }
+            catch (Exception e)
+            {
+               
+            }
+
+            return (carDto);
+        }
+
+        [HttpPut]
+
+        public  async  Task <UpdateCarDto> UpdateCar(UpdateCarDto carDto)
+        {
+
+            try
+            {
+                var car = _mapper.Map<Car>(carDto);
+
+                await  _carRepo.Update(car);
+
+            }
+            catch (Exception e)
+            {
+
+            }
+
+            return carDto;
+        }
+
+
+
+        [HttpDelete]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            try
+            {
+                
+              await  _carRepo.Delete(id);
+
+
+            }
+
+            catch (Exception e)
+            {
+
+                // return BadRequest();
+            }
+            return   Ok();
+
+
+
+        }
+
+        private IQueryable<Car> FilterCar(IQueryable<Car> query, CarRequestDto request)
+        {
+            query = query.Where(c => c.Number.ToString().Equals(request.Search)
                                            || c.Type.Equals(request.Search)
                                            || c.Color.Equals(request.Search)
                                            || c.WithDriver.ToString().Equals(request.Search)
                                            || c.DailyFare.ToString().Equals(request.Search)
                                            || c.EngineCapacity.ToString().Equals(request.Search));
-            }
-            //get Count
-            var count = query.Count();
-            //apply  sorting
+            return query;
+        }
+
+        private IQueryable<Car> CreatePagination(IQueryable<Car> query, CarRequestDto request)
+        {
+            query = query.Skip((request.PageIndex - 1) * request.PageSize).Take(request.PageSize);
+            return query;
+        }
+
+        private IQueryable<Car> SortCar(IQueryable<Car> query, CarRequestDto request)
+        {
             if (!String.IsNullOrEmpty(request.Sort))
             {
                 switch (request.Sort)
@@ -82,91 +186,8 @@ namespace web.api.Controllers
                         break;
                 }
             }
-          
-            //apply pagination
-
-            var totalPages = (int)Math.Ceiling((decimal)count / request.PageSize);
-            query=query.Skip((request.PageIndex - 1) * request.PageSize).Take(request.PageSize);
-            
-            //output
-            var result= await query.ToListAsync();
-            var resultDto = _mapper.Map<CarDto[]>(result);
-            CarListDto carList = new CarListDto() { CarsPaginationList=resultDto,Count=count};
-
-
-            return   carList;
-        }
-        [HttpGet("getcar/{id}")]
-        public async Task<CarDto> GetAsync(Guid id)
-        {
-            var car = _carRepo.GetById(id);
-           
-            var result = _mapper.Map<CarDto>(car);
-
-            return (result);
+            return query;
         }
 
-
-        [HttpPost("insertcar")]
-        public async Task<CreateCarDto> CreateAsync(CreateCarDto carDto)
-
-        {
-            try
-            {
-                var car = _mapper.Map<Car>(carDto);
-                
-                _carRepo.Add(car);
-
-            }
-            catch (Exception e)
-            {
-               
-            }
-
-            return (carDto);
-        }
-
-        [HttpPut("updatecar")]
-
-        public  async Task <UpdateCarDto> UpdateCar(UpdateCarDto carDto)
-        {
-
-            try
-            {
-                var car = _mapper.Map<Car>(carDto);
-
-                _carRepo.Update(car);
-
-            }
-            catch (Exception e)
-            {
-
-            }
-
-            return (carDto);
-        }
-
-
-
-        [HttpDelete("deletecar")]
-        public async Task<IActionResult> DeleteCar(Guid id)
-        {
-            try
-            {
-                _carRepo.Delete(id);
-
-
-            }
-
-            catch (Exception e)
-            {
-
-                // return BadRequest();
-            }
-            return Ok();
-
-
-
-        }
     }
 }

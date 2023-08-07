@@ -8,6 +8,12 @@ using web.infrastructure.Data;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+builder.Services.AddEndpointsApiExplorer();
+
+builder.Services.AddSwaggerGen();
+
+
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<MyAppDbContext>(options => options.UseSqlServer(
@@ -42,8 +48,18 @@ app.UseRouting();
 
 app.UseAuthorization();
 
+
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.UseSwagger();
+
+app.UseSwaggerUI(options =>
+{
+    options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+    options.RoutePrefix = string.Empty;
+});
+
 
 app.Run();
