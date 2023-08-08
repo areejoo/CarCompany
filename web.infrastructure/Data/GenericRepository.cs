@@ -6,6 +6,7 @@ using web.core.Entities;
 using web.infrastructure.Data;
 using System.Linq;
 using System;
+using System.Data.Entity.Core;
 
 namespace web.infrastructure.Data
 {
@@ -29,23 +30,24 @@ public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
             return  await entities.FirstOrDefaultAsync(s => s.Id == id);  
         }  
         
-        public async Task Add(T entity) {  
+        public async Task AddAsync(T entity) {  
             if (entity == null) {  
                 throw new ArgumentNullException("entity");  
             }  
-             await entities.AddAsync(entity);  
+            await entities.AddAsync(entity);  
             context.SaveChanges();  
         }  
         
-        public async Task Update(T entity) {
-            var car = await entities.FirstOrDefaultAsync(s => s.Id == entity.Id);
+        public async Task UpdateAsync(T entity) {
+            var car= await entities.FirstOrDefaultAsync(s => s.Id == entity.Id);
             if (car == null) {  
-                throw new EntryPointNotFoundException("entity");  
-            }  
+                throw new ObjectNotFoundException();
+            } 
+             context.Update(car);
              await context.SaveChangesAsync();  
         }  
-        public async Task Delete(Guid id) {  
-           ;
+        public async Task DeleteAsync(Guid id) {  
+           
             var entity=  await entities.FirstOrDefaultAsync(s => s.Id == id);
             if (entity != null)
             {
@@ -54,7 +56,7 @@ public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
                 await context.SaveChangesAsync();
             }
             else {
-                throw new EntryPointNotFoundException("entity");
+                throw new ObjectNotFoundException();
             }
         }  
     }  

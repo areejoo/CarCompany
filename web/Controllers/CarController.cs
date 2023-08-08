@@ -34,15 +34,17 @@ namespace web.api.Controllers
         {
             var query =   _carRepo.GetQueryable();
             //filtering
-            if (!String.IsNullOrEmpty(request.Search))
+            if (!string.IsNullOrEmpty(request.Search))
             {
                 query = FilterCar(query, request);
             }
             //get Count
-            var count = query.Count();
+            var count = query.CountAsync();
             //apply  sorting
+             if (!string.IsNullOrEmpty(request.Sort)){
 
             query = SortCar(query,request);
+            }
 
             //apply pagination
 
@@ -50,33 +52,37 @@ namespace web.api.Controllers
             
             //output
             var result= await query.ToListAsync();
-            var resultDto = _mapper.Map<CarDto[]>(result);
-            CarListDto carList = new CarListDto() { CarsPaginationList=resultDto,Count=count};
+            var resultDto = _mapper.Map<List<CarDto>>(result);
+            CarListDto carListDto = new CarListDto() { CarsPaginationList=resultDto,Count=await  count};
 
 
-            return   carList;
+            return   carListDto;
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         public async Task<CarDto> GetAsync(Guid id)
         {
             var car = await _carRepo.GetByIdAsync(id);
            
-            var result = _mapper.Map<CarDto>(car);
+            var carDto = _mapper.Map<CarDto>(car);
 
-            return (result);
+            return carDto;
         }
 
 
         [HttpPost]
-        public async Task<CreateCarDto> CreateAsync(CreateCarDto carDto)
+        public async Task<CarDto> CreateAsync(CreateCarDto createCarDto)
 
         {
+            CarDto carDto=null;
             try
             {
-                var car = _mapper.Map<Car>(carDto);
+                var carEntity = _mapper.Map<Car>(createCarDto);
                 
-                await _carRepo.Add(car);
+                await _carRepo.AddAsync(carEntity);
+
+                carDto = _mapper.Map<CarDto>(carEntity);
+
 
             }
             catch (Exception e)
@@ -84,19 +90,21 @@ namespace web.api.Controllers
                
             }
 
-            return (carDto);
+            return carDto;
         }
 
-        [HttpPut]
+        [HttpPut("{id}")]
 
-        public  async  Task <UpdateCarDto> UpdateCar(UpdateCarDto carDto)
+        public  async  Task <CarDto> UpdateAsync(UpdateCarDto updateCarDto)
         {
+            CarDto carDto = null;
 
             try
             {
-                var car = _mapper.Map<Car>(carDto);
+                var carEntity = _mapper.Map<Car>(updateCarDto);
 
-                await  _carRepo.Update(car);
+                await  _carRepo.UpdateAsync(carEntity);
+                carDto = _mapper.Map<CarDto>(carEntity);
 
             }
             catch (Exception e)
@@ -109,13 +117,13 @@ namespace web.api.Controllers
 
 
 
-        [HttpDelete]
-        public async Task<IActionResult> Delete(Guid id)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteAsync(Guid id)
         {
             try
             {
                 
-              await  _carRepo.Delete(id);
+              await  _carRepo.DeleteAsync(id);
 
 
             }
@@ -123,7 +131,7 @@ namespace web.api.Controllers
             catch (Exception e)
             {
 
-                // return BadRequest();
+                return BadRequest();
             }
             return   Ok();
 
@@ -150,8 +158,7 @@ namespace web.api.Controllers
 
         private IQueryable<Car> SortCar(IQueryable<Car> query, CarRequestDto request)
         {
-            if (!String.IsNullOrEmpty(request.Sort))
-            {
+           
                 switch (request.Sort)
                 {
                     case "Color_desc":
@@ -184,8 +191,8 @@ namespace web.api.Controllers
                     default:
                         query = query.OrderBy(c => c.Color);
                         break;
+                
                 }
-            }
             return query;
         }
 

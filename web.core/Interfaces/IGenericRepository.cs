@@ -9,8 +9,8 @@ namespace web.core.Interfaces
     {
         IQueryable<T> GetQueryable();
         Task<T> GetByIdAsync(Guid id);
-        Task Add(T entity);
-        Task Update(T entity);
-        Task Delete(Guid id);
+        Task AddAsync(T entity);
+        Task UpdateAsync(T entity);
+        Task DeleteAsync(Guid id);
     }
 }

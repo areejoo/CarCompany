@@ -11,13 +11,17 @@ namespace web.infrastructure.Configuration
 {
 
 
-public class CarEntityTypeConfiguration : IEntityTypeConfiguration<Car>
-{
-    public void Configure(EntityTypeBuilder<Car> builder)
+    public class CarEntityTypeConfiguration : IEntityTypeConfiguration<Car>
     {
-        builder
-            .HasIndex(c => c.Number)
-            .IsUnique();
+        public void Configure(EntityTypeBuilder<Car> builder)
+        {
+            builder
+                .HasIndex(c => c.Number)
+                .IsUnique();
+
+            builder
+               .Property(c => c.Id)
+                .HasDefaultValueSql("NewID()");
+        }
     }
-}
 }

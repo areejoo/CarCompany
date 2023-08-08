@@ -32,6 +32,13 @@ builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepositor
 
 builder.Services.AddMemoryCache();
 var app = builder.Build();
+app.UseSwagger();
+
+app.UseSwaggerUI(options =>
+{
+    options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+    options.RoutePrefix = string.Empty;
+});
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

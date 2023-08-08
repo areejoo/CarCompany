@@ -4,6 +4,7 @@ namespace web.api.Dtos
 {
     public class CarDto
     {
+        public Guid Id { get; set; }
         [Required]
         public int Number { get; set; }
 
@@ -15,7 +16,7 @@ namespace web.api.Dtos
         public string Type { get; set; }
 
 
-        public double DailyFare { get; set; } 
+        public double DailyFare { get; set; }
 
 
         public bool WithDriver { get; set; }
