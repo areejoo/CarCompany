@@ -4,7 +4,6 @@ namespace web.api.Dtos
 {
     public class CarDto
     {
-        public Guid Id { get; set; }
         [Required]
         public int Number { get; set; }
 

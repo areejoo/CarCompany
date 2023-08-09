@@ -9,6 +9,7 @@ using web.api.Dtos;
 using Microsoft.Extensions.Caching.Memory;
 using AutoMapper;
 using System.Data.Entity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace web.api.Controllers
 {
@@ -28,9 +29,9 @@ namespace web.api.Controllers
         }
 
 
-
+        [AllowAnonymous]  
         [HttpGet]
-        public async Task<CarListDto> GetListAsync(CarRequestDto request)
+        public async Task<CarListDto> GetListAsync([FromBody]CarRequestDto request)
         {
             var query =   _carRepo.GetQueryable();
             //filtering
@@ -71,7 +72,7 @@ namespace web.api.Controllers
 
 
         [HttpPost]
-        public async Task<CarDto> CreateAsync(CreateCarDto createCarDto)
+        public async Task<CarDto> CreateAsync([FromBody] CreateCarDto createCarDto)
 
         {
             CarDto carDto=null;
@@ -95,7 +96,7 @@ namespace web.api.Controllers
 
         [HttpPut("{id}")]
 
-        public  async  Task <CarDto> UpdateAsync(UpdateCarDto updateCarDto)
+        public  async  Task <CarDto> UpdateAsync([FromBody] UpdateCarDto updateCarDto)
         {
             CarDto carDto = null;
 

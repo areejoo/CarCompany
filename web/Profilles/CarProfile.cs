@@ -10,7 +10,9 @@ namespace web.api.Profilles
         {
             CreateMap<Car, CarDto>();
             CreateMap<CarDto ,Car>();
+            CreateMap<CreateCarDto,CarDto>();
             CreateMap<Car, CreateCarDto>();
+            CreateMap<Car, UpdateCarDto>();
         }
     }
 }
