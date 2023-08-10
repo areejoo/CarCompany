@@ -9,6 +9,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
+
+builder.Services.BuildServiceProvider().GetRequiredService<ILogger<Program>>();
+
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen();

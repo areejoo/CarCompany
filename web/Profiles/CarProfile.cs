@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using web.api.Dtos;
+using web.api.Dtos.Incomming;
+using web.api.Dtos.Outcomming;
 using web.core.Entities;
 
 namespace web.api.Profilles
@@ -10,9 +12,10 @@ namespace web.api.Profilles
         {
             CreateMap<Car, CarDto>();
             CreateMap<CarDto ,Car>();
-            CreateMap<CreateCarDto,CarDto>();
+            CreateMap<CreateCarDto,Car>();
             CreateMap<Car, CreateCarDto>();
             CreateMap<Car, UpdateCarDto>();
+            CreateMap<UpdateCarDto,Car>();
         }
     }
 }

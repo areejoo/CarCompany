@@ -5,11 +5,13 @@ using System.Collections.Generic;
 using web.core;
 using web.core.Entities;
 using web.core.Interfaces;
-using web.api.Dtos;
+using web.api.Dtos.Incomming;
+using web.api.Dtos.Outcomming;
 using Microsoft.Extensions.Caching.Memory;
 using AutoMapper;
-using System.Data.Entity;
-using Microsoft.AspNetCore.Authorization;
+
+using Microsoft.EntityFrameworkCore;
+using web.api.Dtos;
 
 namespace web.api.Controllers
 {
@@ -19,28 +21,32 @@ namespace web.api.Controllers
     {
         private readonly IGenericRepository<Car> _carRepo;
         private readonly IMapper _mapper;
+        private readonly ILogger _logger;
 
 
-        public CarController(IGenericRepository<Car> carRepo, IMapper mapper)
+
+        public CarController(IGenericRepository<Car> carRepo, IMapper mapper, ILogger<CarController> logger)
         {
             _carRepo = carRepo;
             _mapper = mapper;
+            _logger = logger;
 
         }
 
 
-        [AllowAnonymous]  
+        
         [HttpGet]
-        public async Task<CarListDto> GetListAsync([FromBody]CarRequestDto request)
+        [Consumes("application/json")]
+        public async Task<CarListDto> GetListAsync([FromQuery]CarRequestDto request)
         {
-            var query =   _carRepo.GetQueryable();
+            var query =    _carRepo.GetQueryable();
             //filtering
             if (!string.IsNullOrEmpty(request.Search))
             {
                 query = FilterCar(query, request);
             }
             //get Count
-            var count = query.CountAsync();
+            var count = await  query.CountAsync();
             //apply  sorting
              if (!string.IsNullOrEmpty(request.Sort)){
 
@@ -54,7 +60,7 @@ namespace web.api.Controllers
             //output
             var result= await query.ToListAsync();
             var resultDto = _mapper.Map<List<CarDto>>(result);
-            CarListDto carListDto = new CarListDto() { CarsPaginationList=resultDto,Count=await  count};
+            CarListDto carListDto = new CarListDto() { CarsPaginationList=resultDto,Count= count};
 
 
             return   carListDto;
@@ -78,6 +84,7 @@ namespace web.api.Controllers
             CarDto carDto=null;
             try
             {
+                _logger.LogInformation(createCarDto.Color);
                 var carEntity = _mapper.Map<Car>(createCarDto);
                 
                 await _carRepo.AddAsync(carEntity);
@@ -88,7 +95,7 @@ namespace web.api.Controllers
             }
             catch (Exception e)
             {
-               
+                _logger.LogInformation(e.ToString());
             }
 
             return carDto;
@@ -110,6 +117,8 @@ namespace web.api.Controllers
             }
             catch (Exception e)
             {
+                _logger.LogInformation(e.ToString());
+
 
             }
 

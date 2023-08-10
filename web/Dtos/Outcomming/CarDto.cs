@@ -1,9 +1,12 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace web.api.Dtos
+namespace web.api.Dtos.Outcomming
 {
     public class CarDto
     {
+        [Required]
+        public Guid Id { get; set; }
+
         [Required]
         public int Number { get; set; }
 
@@ -11,15 +14,13 @@ namespace web.api.Dtos
 
         public string Color { get; set; }
 
-
         public string Type { get; set; }
 
-
         public double DailyFare { get; set; }
-
 
         public bool WithDriver { get; set; }
 
         public Guid? DriverId { get; set; }
+
     }
 }

@@ -1,9 +1,13 @@
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 using web.core.Entities;
-namespace web.api.Dtos
+namespace web.api.Dtos.Incomming
 {
     public class CreateCarDto
+
     {
+        private bool withDriver=false;
+
         [Required]
         public int Number { get; set; }
 
@@ -17,9 +21,16 @@ namespace web.api.Dtos
 
         public double DailyFare { get; set; }
 
+        public Guid? DriverId
+        {
+            get { return DriverId; }
+            set
+            {
+                DriverId = value;
+                withDriver = (DriverId != null) ? true : false;
+            }
+        }
 
-        public bool WithDriver { get; set; }
 
-        public Guid? DriverId { get; set; }
     }
 }

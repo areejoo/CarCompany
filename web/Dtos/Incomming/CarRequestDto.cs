@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using web.core.Entities;
-namespace web.api.Dtos
+namespace web.api.Dtos.Incomming
 {
     public class CarRequestDto
     {
@@ -16,7 +16,9 @@ namespace web.api.Dtos
         }
 
         public string? Sort { get; set; }//
+
         private string _search;
+        
         public string Search
         {
             get => _search;

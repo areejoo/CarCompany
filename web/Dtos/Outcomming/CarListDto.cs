@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using web.core.Entities;
 
-namespace web.api.Dtos
+namespace web.api.Dtos.Outcomming
 {
     public class CarListDto
     {

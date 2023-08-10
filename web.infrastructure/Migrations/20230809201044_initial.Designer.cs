@@ -12,7 +12,7 @@ using web.infrastructure.Data;
 namespace web.infrastructure.Migrations
 {
     [DbContext(typeof(MyAppDbContext))]
-    [Migration("20230803084501_initial")]
+    [Migration("20230809201044_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -29,10 +29,10 @@ namespace web.infrastructure.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("NewID()");
 
                     b.Property<string>("Color")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("DailyFare")
@@ -48,7 +48,6 @@ namespace web.infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Type")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("WithDriver")
@@ -71,11 +70,9 @@ namespace web.infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Address")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -83,7 +80,6 @@ namespace web.infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Phone")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -105,7 +101,6 @@ namespace web.infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Phone")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("ReplacementDriverId")
