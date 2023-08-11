@@ -21,10 +21,15 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddDbContext<MyAppDbContext>(options => options.UseSqlServer(
-
+builder.Services.AddDbContext<MyAppDbContext>(options => {
+ options.UseSqlServer(
 builder.Configuration.GetConnectionString("DefaultConnection"),
-                    optionsBuilder => optionsBuilder.MigrationsAssembly("web.infrastructure")));
+optionsBuilder => optionsBuilder.MigrationsAssembly("web.infrastructure")
+);
+
+    options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+
+});
 
 builder.Services.AddAutoMapper(typeof(Program));
 

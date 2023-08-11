@@ -42,19 +42,21 @@ namespace web.infrastructure.Data
             {
                 throw new ArgumentNullException("entity");
             }
-            await entities.AddAsync(entity);
-            context.SaveChanges();
+            var c=await entities.AddAsync(entity);
+            var n=context.SaveChanges();
         }
 
         public async Task UpdateAsync(T entity)
         {
-            var car = await entities.FirstOrDefaultAsync(s => s.Id == entity.Id);
-            if (car == null)
+            var entityExists = await entities.AsNoTracking().FirstOrDefaultAsync(s => s.Id == entity.Id);
+            
+            if (entityExists == null)
             {
                 throw new System.Data.Entity.Core.ObjectNotFoundException();
             }
-            context.Update(car);
-            await context.SaveChangesAsync();
+            var c = context.Update(entity); 
+            //context.Entry(entityExists).CurrentValues.SetValues(entity);
+            var w=await context.SaveChangesAsync();
         }
         public async Task DeleteAsync(Guid id)
         {
