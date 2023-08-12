@@ -9,6 +9,7 @@ using web.api.Dtos.Incomming;
 using web.api.Dtos.Outcomming;
 using Microsoft.Extensions.Caching.Memory;
 using AutoMapper;
+
 using Microsoft.EntityFrameworkCore;
 using web.api.Dtos;
 
@@ -83,6 +84,7 @@ namespace web.api.Controllers
             CarDto carDto=null;
             try
             {
+                _logger.LogInformation(createCarDto.Color);
                 var carEntity = _mapper.Map<Car>(createCarDto);
                 
                 await _carRepo.AddAsync(carEntity);
@@ -108,13 +110,12 @@ namespace web.api.Controllers
             try
             {
                 var carEntity = _mapper.Map<Car>(updateCarDto);
-                await _carRepo.UpdateAsync(carEntity);
-                carDto = _mapper.Map<CarDto>(carEntity);
-               
 
+                await  _carRepo.UpdateAsync(carEntity);
+                carDto = _mapper.Map<CarDto>(carEntity);
 
             }
-          catch(Exception e)
+            catch (Exception e)
             {
                 _logger.LogInformation(e.ToString());
 

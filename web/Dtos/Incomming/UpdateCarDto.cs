@@ -22,7 +22,14 @@ namespace web.api.Dtos.Incomming
 
         public double? DailyFare { get; set; }
 
-        public Guid? DriverId { get; set; }
-        
+        public Guid? DriverId
+        {
+            get { return DriverId; }
+            set
+            {
+                DriverId = value;
+                withDriver = (DriverId != null) ? true : false;
+            }
+        }
     }
 }
