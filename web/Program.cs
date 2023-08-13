@@ -4,6 +4,7 @@ using web.core;
 using web.core.Entities;
 using web.core.Interfaces;
 using web.infrastructure.Data;
+using web.infrastructure.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,11 +29,16 @@ builder.Configuration.GetConnectionString("DefaultConnection"),
 
 builder.Services.AddAutoMapper(typeof(Program));
 
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+builder.Services.AddScoped<ICarRepository, CarRepository>();
+builder.Services.AddScoped<ICarService, CarService>();
+
 
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
-// builder.Services.AddScoped<typeof(IGenericRepository<>), typeof(GenericReository<>)>();
-// builder.Services.AddScoped(typeof(IGenericRepository < > ), typeof(GenericReository< > ));  
+ //builder.Services.AddScoped<typeof(IGenericRepository<>), typeof(GenericReository<>)>();
+//builder.Services.AddScoped(typeof(IGenericRepository < > ), typeof(GenericReository< > ));  
 
 
 builder.Services.AddMemoryCache();

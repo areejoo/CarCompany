@@ -19,58 +19,62 @@ namespace web.api.Controllers
     [Route("api/[controller]")]
     public class CarController : Controller
     {
-        private readonly IGenericRepository<Car> _carRepo;
+        //private readonly IGenericRepository<Car> _carRepo;
         private readonly IMapper _mapper;
         private readonly ILogger _logger;
+        public readonly ICarService _cartService;
 
 
 
-        public CarController(IGenericRepository<Car> carRepo, IMapper mapper, ILogger<CarController> logger)
+
+        public CarController(IMapper mapper, ILogger<CarController> logger, ICarService cartService)
         {
-            _carRepo = carRepo;
+            //_carRepo = carRepo;
             _mapper = mapper;
             _logger = logger;
+            _cartService = cartService;
 
         }
 
 
-        
+
         [HttpGet]
         [Consumes("application/json")]
-        public async Task<CarListDto> GetListAsync([FromQuery]CarRequestDto request)
+        public async Task<CarListDto> GetListAsync([FromQuery] CarRequestDto request)
         {
-            var query =    _carRepo.GetQueryable();
+            var query = _cartService.GetCarsQueryable();
             //filtering
             if (!string.IsNullOrEmpty(request.Search))
             {
                 query = FilterCar(query, request);
             }
             //get Count
-            var count = await  query.CountAsync();
+            var count = await query.CountAsync();
             //apply  sorting
-             if (!string.IsNullOrEmpty(request.Sort)){
+            if (!string.IsNullOrEmpty(request.Sort))
+            {
 
-            query = SortCar(query,request);
+                query = SortCar(query, request);
             }
 
             //apply pagination
 
             query = CreatePagination(query, request);
-            
+
             //output
-            var result= await query.ToListAsync();
+            var result = await query.ToListAsync();
             var resultDto = _mapper.Map<List<CarDto>>(result);
-            CarListDto carListDto = new CarListDto() { CarsPaginationList=resultDto,Count= count};
+            CarListDto carListDto = new CarListDto() { CarsPaginationList = resultDto, Count = count };
 
 
-            return   carListDto;
+            return carListDto;
         }
 
         [HttpGet("{id}")]
         public async Task<CarDto> GetAsync(Guid id)
         {
-            var car = await _carRepo.GetByIdAsync(id);
-           
+            var car = await _cartService.GetCarByIdAsync(id);
+
             var carDto = _mapper.Map<CarDto>(car);
 
             return carDto;
@@ -79,18 +83,15 @@ namespace web.api.Controllers
 
         [HttpPost]
         public async Task<CarDto> CreateAsync([FromBody] CreateCarDto createCarDto)
-
         {
-            CarDto carDto=null;
+            CarDto carDto = null;
             try
             {
                 _logger.LogInformation(createCarDto.Color);
                 var carEntity = _mapper.Map<Car>(createCarDto);
-                
-                await _carRepo.AddAsync(carEntity);
-
-                carDto = _mapper.Map<CarDto>(carEntity);
-
+                var result = await _cartService.AddCarAsync(carEntity);
+                if (result)
+                    carDto = _mapper.Map<CarDto>(carEntity);
 
             }
             catch (Exception e)
@@ -103,16 +104,16 @@ namespace web.api.Controllers
 
         [HttpPut("{id}")]
 
-        public  async  Task <CarDto> UpdateAsync([FromBody] UpdateCarDto updateCarDto)
+        public async Task<CarDto> UpdateAsync([FromBody] UpdateCarDto updateCarDto)
         {
             CarDto carDto = null;
 
             try
             {
                 var carEntity = _mapper.Map<Car>(updateCarDto);
-
-                await  _carRepo.UpdateAsync(carEntity);
-                carDto = _mapper.Map<CarDto>(carEntity);
+                var result = await _cartService.UpdateCarAsync(carEntity);
+                if (result)
+                    carDto = _mapper.Map<CarDto>(carEntity);
 
             }
             catch (Exception e)
@@ -130,12 +131,11 @@ namespace web.api.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync(Guid id)
         {
+            var result = false;
             try
             {
+                 result=await _cartService.DeleteCarAsync(id);
                 
-              await  _carRepo.DeleteAsync(id);
-
-
             }
 
             catch (Exception e)
@@ -143,8 +143,10 @@ namespace web.api.Controllers
 
                 return BadRequest();
             }
-            return   Ok();
-
+            if (result)
+                return Ok();
+            else
+                return NotFound();
 
 
         }
@@ -168,41 +170,41 @@ namespace web.api.Controllers
 
         private IQueryable<Car> SortCar(IQueryable<Car> query, CarRequestDto request)
         {
-           
-                switch (request.Sort)
-                {
-                    case "Color_desc":
-                        query = query.OrderByDescending(c => c.Color);
-                        break;
-                    case "EngineCapacity_desc":
-                        break;
-                    case "CapacityEngine-asc":
-                        break;
-                    case "Type_desc":
-                        query = query.OrderByDescending(c => c.Type);
-                        break;
-                    case "Type_asc":
-                        query = query.OrderBy(c => c.Type);
-                        break;
-                    case "WithDriver_desc":
-                        query = query.OrderByDescending(c => c.WithDriver);
-                        break;
-                    case "WithDriver_asc":
-                        query = query.OrderBy(c => c.WithDriver);
-                        break;
-                    case "DailyFare_desc":
-                        query = query.OrderByDescending(c => c.DailyFare);
-                        break;
-                    case "DailyFare_asc":
-                        query = query.OrderBy(c => c.DailyFare);
-                        break;
+
+            switch (request.Sort)
+            {
+                case "Color_desc":
+                    query = query.OrderByDescending(c => c.Color);
+                    break;
+                case "EngineCapacity_desc":
+                    break;
+                case "CapacityEngine-asc":
+                    break;
+                case "Type_desc":
+                    query = query.OrderByDescending(c => c.Type);
+                    break;
+                case "Type_asc":
+                    query = query.OrderBy(c => c.Type);
+                    break;
+                case "WithDriver_desc":
+                    query = query.OrderByDescending(c => c.WithDriver);
+                    break;
+                case "WithDriver_asc":
+                    query = query.OrderBy(c => c.WithDriver);
+                    break;
+                case "DailyFare_desc":
+                    query = query.OrderByDescending(c => c.DailyFare);
+                    break;
+                case "DailyFare_asc":
+                    query = query.OrderBy(c => c.DailyFare);
+                    break;
 
 
-                    default:
-                        query = query.OrderBy(c => c.Color);
-                        break;
-                
-                }
+                default:
+                    query = query.OrderBy(c => c.Color);
+                    break;
+
+            }
             return query;
         }
 

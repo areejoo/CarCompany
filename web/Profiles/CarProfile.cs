@@ -11,11 +11,11 @@ namespace web.api.Profilles
         public CarProfile()
         {
             CreateMap<Car, CarDto>();
-            CreateMap<CarDto ,Car>();
-            CreateMap<CreateCarDto,Car>();
+            CreateMap<CarDto, Car>();
+            CreateMap<CreateCarDto, Car>();
             CreateMap<Car, CreateCarDto>();
             CreateMap<Car, UpdateCarDto>();
-            CreateMap<UpdateCarDto,Car>();
+            CreateMap<UpdateCarDto, Car>().ForMember(dest => dest.WithDriver, opt => opt.MapFrom(src => src.DriverId == null ? false : true));
         }
     }
 }

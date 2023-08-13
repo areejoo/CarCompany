@@ -43,18 +43,18 @@ namespace web.infrastructure.Data
                 throw new ArgumentNullException("entity");
             }
             await entities.AddAsync(entity);
-            context.SaveChanges();
+           // context.SaveChanges();
         }
 
         public async Task UpdateAsync(T entity)
         {
-            var car = await entities.FirstOrDefaultAsync(s => s.Id == entity.Id);
+            var car = await entities.AsNoTracking().FirstOrDefaultAsync(s => s.Id == entity.Id);
             if (car == null)
             {
                 throw new System.Data.Entity.Core.ObjectNotFoundException();
             }
-            context.Update(car);
-            await context.SaveChangesAsync();
+            context.Update(entity);
+            //await context.SaveChangesAsync();
         }
         public async Task DeleteAsync(Guid id)
         {
@@ -64,7 +64,7 @@ namespace web.infrastructure.Data
             {
                 context.Remove(entity);
 
-                await context.SaveChangesAsync();
+               // await context.SaveChangesAsync();
             }
             else
             {
