@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "i1qAwjAkWSA8jQgM700aMdrNz6mO28dfTtsrcMzisNB5hplNCz6Jo7Z5XuSo1uKlo/UoHuRzvF/lAPJeScGzXQ==",
+  "dgSpecHash": "u/9zrRMHPaknn15zHTPSltlf1aRHmcQveWzTPmS1/R8PWoX0LJ/mRbRIsR380bWJZvzDsbn6x9J+whcNyrO0WA==",
   "success": true,
   "projectFilePath": "C:\\Users\\asy76\\source\\repos\\web\\web\\web.api.csproj",
   "expectedPackageFiles": [
@@ -9,6 +9,9 @@
     "C:\\Users\\asy76\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\asy76\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",
     "C:\\Users\\asy76\\.nuget\\packages\\entityframework\\6.4.4\\entityframework.6.4.4.nupkg.sha512",
+    "C:\\Users\\asy76\\.nuget\\packages\\fluentvalidation\\11.7.1\\fluentvalidation.11.7.1.nupkg.sha512",
+    "C:\\Users\\asy76\\.nuget\\packages\\fluentvalidation.aspnetcore\\11.3.0\\fluentvalidation.aspnetcore.11.3.0.nupkg.sha512",
+    "C:\\Users\\asy76\\.nuget\\packages\\fluentvalidation.dependencyinjectionextensions\\11.5.1\\fluentvalidation.dependencyinjectionextensions.11.5.1.nupkg.sha512",
     "C:\\Users\\asy76\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\asy76\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.1\\microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",
     "C:\\Users\\asy76\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",

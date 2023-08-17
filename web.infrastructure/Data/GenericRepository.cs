@@ -48,13 +48,16 @@ namespace web.infrastructure.Data
 
         public async Task UpdateAsync(T entity)
         {
-            var car = await entities.AsNoTracking().FirstOrDefaultAsync(s => s.Id == entity.Id);
-            if (car == null)
+            var existsEntity = await entities.FirstOrDefaultAsync(s => s.Id == entity.Id);
+            if (existsEntity == null)
             {
                 throw new System.Data.Entity.Core.ObjectNotFoundException();
             }
-            context.Update(entity);
-            //await context.SaveChangesAsync();
+      
+
+
+            context.Update(existsEntity);
+           
         }
         public async Task DeleteAsync(Guid id)
         {

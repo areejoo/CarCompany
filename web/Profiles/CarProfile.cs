@@ -15,7 +15,13 @@ namespace web.api.Profilles
             CreateMap<CreateCarDto, Car>();
             CreateMap<Car, CreateCarDto>();
             CreateMap<Car, UpdateCarDto>();
-            CreateMap<UpdateCarDto, Car>().ForMember(dest => dest.WithDriver, opt => opt.MapFrom(src => src.DriverId == null ? false : true));
+            CreateMap<UpdateCarDto,CarDto>();
+            CreateMap<UpdateCarDto, Car>()
+                .ForMember(destination => destination.Type, options => options.Condition(source => !string.IsNullOrEmpty(source.Type)));
+
+
+
+          
         }
     }
 }

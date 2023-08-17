@@ -23,6 +23,6 @@ namespace web.api.Dtos.Incomming
         public double? DailyFare { get; set; }
 
         public Guid? DriverId { get; set; }
-        
+
     }
 }

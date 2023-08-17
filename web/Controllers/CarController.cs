@@ -9,10 +9,10 @@ using web.api.Dtos.Incomming;
 using web.api.Dtos.Outcomming;
 using Microsoft.Extensions.Caching.Memory;
 using AutoMapper;
-
+using FluentValidation.Results;
 using Microsoft.EntityFrameworkCore;
 using web.api.Dtos;
-
+using System;
 namespace web.api.Controllers
 {
     [ApiController]
@@ -22,7 +22,7 @@ namespace web.api.Controllers
         //private readonly IGenericRepository<Car> _carRepo;
         private readonly IMapper _mapper;
         private readonly ILogger _logger;
-        public readonly ICarService _cartService;
+        public readonly ICarService _carService;
 
 
 
@@ -32,7 +32,7 @@ namespace web.api.Controllers
             //_carRepo = carRepo;
             _mapper = mapper;
             _logger = logger;
-            _cartService = cartService;
+            _carService = cartService;
 
         }
 
@@ -42,7 +42,7 @@ namespace web.api.Controllers
         [Consumes("application/json")]
         public async Task<CarListDto> GetListAsync([FromQuery] CarRequestDto request)
         {
-            var query = _cartService.GetCarsQueryable();
+            var query = _carService.GetCarsQueryable();
             //filtering
             if (!string.IsNullOrEmpty(request.Search))
             {
@@ -73,7 +73,7 @@ namespace web.api.Controllers
         [HttpGet("{id}")]
         public async Task<CarDto> GetAsync(Guid id)
         {
-            var car = await _cartService.GetCarByIdAsync(id);
+            var car = await _carService.GetCarByIdAsync(id);
 
             var carDto = _mapper.Map<CarDto>(car);
 
@@ -85,44 +85,89 @@ namespace web.api.Controllers
         public async Task<CarDto> CreateAsync([FromBody] CreateCarDto createCarDto)
         {
             CarDto carDto = null;
-            try
-            {
-                _logger.LogInformation(createCarDto.Color);
-                var carEntity = _mapper.Map<Car>(createCarDto);
-                var result = await _cartService.AddCarAsync(carEntity);
-                if (result)
-                    carDto = _mapper.Map<CarDto>(carEntity);
+            IQueryable<Car> query = null;
+            CreateDtoValidator validator = new CreateDtoValidator();            
+            ValidationResult resultValidation = validator.Validate(createCarDto);
+            if (resultValidation.IsValid)
+                {
 
-            }
-            catch (Exception e)
-            {
-                _logger.LogInformation(e.ToString());
-            }
+                    try
+                    {
+                        query = _carService.GetCarsQueryable();
+                        query = query.Where(c => c.Number == createCarDto.Number);
 
+
+                        if (query.Count()==0)
+                        {
+                            var carEntity = _mapper.Map<Car>(createCarDto);
+                            var result1 = await _carService.AddCarAsync(carEntity);
+                            if (result1)
+                                carDto = _mapper.Map<CarDto>(carEntity);
+                        }
+
+                    }
+                    catch (Exception e)
+                    {
+                        _logger.LogInformation(e.ToString());
+                    }
+
+                
+            }
             return carDto;
+
+
         }
 
         [HttpPut("{id}")]
 
         public async Task<CarDto> UpdateAsync([FromBody] UpdateCarDto updateCarDto)
         {
+            //var carExists=await _carService.GetCarByIdAsync(updateCarDto.Id);
             CarDto carDto = null;
+            IQueryable<Car> query = null;
+            Car carEntity=null;
+            bool result1=false;
+            CarDto carDtoE=null;
+            UpdateDtoValidator validator = new UpdateDtoValidator();            
+            ValidationResult resultValidation = validator.Validate(updateCarDto);
+            if (resultValidation.IsValid)
+                {
 
-            try
-            {
-                var carEntity = _mapper.Map<Car>(updateCarDto);
-                var result = await _cartService.UpdateCarAsync(carEntity);
-                if (result)
-                    carDto = _mapper.Map<CarDto>(carEntity);
+                    try
+                    {
+                        if(updateCarDto.Number>0){
+                        query = _carService.GetCarsQueryable();
+                        query = query.Where(c => c.Number == updateCarDto.Number);
 
+                        //car isnt found
+                        if (query.Count()==0)
+                        {
+                             carEntity = _mapper.Map<Car>(updateCarDto);
+                             result1 = await _carService.UpdateCarAsync(carEntity);
+                            if (result1)
+                                carDto = _mapper.Map<CarDto>(carEntity);
+                            
+                        }
+                        else{}
+                        }//if 
+                        else
+                        {
+                            carEntity = _mapper.Map<Car>(updateCarDto);
+                            //carEntity = _mapper.Map<Car>(carDtoE);
+                            result1 = await _carService.UpdateCarAsync(carEntity);
+                            if (result1)
+                                carDto = _mapper.Map<CarDto>(carEntity);
+                        
+                        }
+
+                    }
+                    catch (Exception e)
+                    {
+                        _logger.LogInformation(e.ToString());
+                    }
+
+                
             }
-            catch (Exception e)
-            {
-                _logger.LogInformation(e.ToString());
-
-
-            }
-
             return carDto;
         }
 
@@ -134,8 +179,8 @@ namespace web.api.Controllers
             var result = false;
             try
             {
-                 result=await _cartService.DeleteCarAsync(id);
-                
+                result = await _carService.DeleteCarAsync(id);
+
             }
 
             catch (Exception e)

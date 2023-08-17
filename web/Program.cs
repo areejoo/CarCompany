@@ -1,5 +1,7 @@
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using web.api.Dtos.Incomming;
 using web.core;
 using web.core.Entities;
 using web.core.Interfaces;
@@ -33,6 +35,8 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddScoped<ICarRepository, CarRepository>();
 builder.Services.AddScoped<ICarService, CarService>();
+builder.Services.AddScoped< IValidator<CreateCarDto>, CreateDtoValidator >();
+builder.Services.AddScoped< IValidator<UpdateCarDto>, UpdateDtoValidator >();
 
 
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));

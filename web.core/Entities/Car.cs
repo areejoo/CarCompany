@@ -13,7 +13,7 @@
         public string Type { get; set; }
 
 
-        public double DailyFare { get; set; } 
+        public double DailyFare { get; set; }
 
 
         public bool WithDriver { get; set; }
